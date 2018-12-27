@@ -60,36 +60,36 @@ def print_speed(down_speed, up_speed, final=False):
         sys.stdout.write(ERASE_LINE)
 
 
-start_time = int(time.time())
+def main():
+    start_time = time.time()
+    start_down_bytes, start_up_bytes = get_current_bytes()
+    last_down_bytes, last_up_bytes = start_down_bytes, start_up_bytes
+    last_time = start_time
 
+    down_speed = 0
+    up_speed = 0
 
-data = None
+    try:
+        while True:
+            print_speed(down_speed, up_speed)
+            time.sleep(1)
 
-start_time = time.time()
-start_down_bytes, start_up_bytes = get_current_bytes()
-last_down_bytes, last_up_bytes = start_down_bytes, start_up_bytes
-last_time = start_time
+            down_bytes, up_bytes = get_current_bytes()
+            now = time.time()
 
-down_speed = 0
-up_speed = 0
+            down_speed = (last_down_bytes - down_bytes) / (last_time - now)
+            up_speed = (last_up_bytes - up_bytes) / (last_time - now)
 
-try:
-    while True:
-        print_speed(down_speed, up_speed)
-        time.sleep(1)
-
+            last_down_bytes, last_up_bytes = down_bytes, up_bytes
+            last_time = now
+    except KeyboardInterrupt:
+        print("\rAverage speed")
         down_bytes, up_bytes = get_current_bytes()
         now = time.time()
+        down_speed = (start_down_bytes - down_bytes) / (start_time - now)
+        up_speed = (start_up_bytes - up_bytes) / (start_time - now)
+        print_speed(down_speed, up_speed, True)
 
-        down_speed = (last_down_bytes - down_bytes) / (last_time - now)
-        up_speed = (last_up_bytes - up_bytes) / (last_time - now)
 
-        last_down_bytes, last_up_bytes = down_bytes, up_bytes
-        last_time = now
-except KeyboardInterrupt:
-    print("\rAverage speed")
-    down_bytes, up_bytes = get_current_bytes()
-    now = time.time()
-    down_speed = (start_down_bytes - down_bytes) / (start_time - now)
-    up_speed = (start_up_bytes - up_bytes) / (start_time - now)
-    print_speed(down_speed, up_speed, True)
+if __name__ == "__main__":
+    main()

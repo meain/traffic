@@ -6,10 +6,16 @@ Gives you the current traffic stats on your system.
 
 ![gif](https://i.imgur.com/gtrfbxC.gif)
 
-### Running
-
-> `python3` only as of now
+## Installation
 
 ```
-python traffic.py
+pip3 install webtraffic
+```
+
+## Usage
+
+Just run:
+
+```
+traffic
 ```
