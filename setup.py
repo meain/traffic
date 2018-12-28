@@ -19,7 +19,7 @@ install_requires = ["psutil"]
 
 setuptools.setup(
     name="webtraffic",
-    version="0.1.0",
+    version="0.1.9",
     author="Abin Simon",
     author_email="abinsimon10@gmail.com",
     description="See web traffic info python",
@@ -28,5 +28,5 @@ setuptools.setup(
     packages=["traffic"],
     keywords=["speed", "web", "download", "upload"],
     classifiers=cur_classifiers,
-    entry_points={"console_scripts": ["webtraffic = traffic.traffic:main"]},
+    entry_points={"console_scripts": ["traffic = traffic.traffic:main"]},
 )
