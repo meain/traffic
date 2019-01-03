@@ -36,6 +36,7 @@ def format_speed(speed):
         str(int(speed / 1024 ** factor))
         + " "
         + ["B", "KB", "MB", "GB", "TB", "PB"][factor]
+        + "/s"
     )
 
 
