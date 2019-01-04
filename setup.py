@@ -19,7 +19,7 @@ install_requires = ["psutil"]
 
 setuptools.setup(
     name="webtraffic",
-    version="0.2.4",
+    version="0.2.6",
     author="Abin Simon",
     author_email="abinsimon10@gmail.com",
     description="See web traffic info python",

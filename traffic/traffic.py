@@ -20,7 +20,8 @@ network_interface = "en0"
 counters = psutil.net_io_counters(pernic=True)
 if "en0" not in counters:
     network_interface = list(counters.keys())[0]
-    print(f"Could not find en0, using {network_interface}")
+
+print(f"Interface: {network_interface}")
 
 
 def get_current_bytes():
@@ -30,7 +31,7 @@ def get_current_bytes():
     return down_bytes, up_bytes
 
 
-def format_speed(speed):
+def format_speed(speed, ps):
     if speed == 0:
         return "0 B"
     factor = int(math.floor(math.log(speed) / math.log(1024)))
@@ -38,21 +39,21 @@ def format_speed(speed):
         str(int(speed / 1024 ** factor))
         + " "
         + ["B", "KB", "MB", "GB", "TB", "PB"][factor]
-        + "/s"
+        + ("/s" if ps else "")
     )
 
 
-def print_speed(down_speed, up_speed, final=False):
+def print_speed(down_speed, up_speed, final=False, ps=True):
     CURSOR_UP_ONE = "\x1b[1A"
     ERASE_LINE = "\x1b[2K"
     sys.stdout.write(
         "\rDown: %s%s%s\n\r  Up: %s%s%s\n"
         % (
             bcolors.GREEN,
-            format_speed(down_speed),
+            format_speed(down_speed, ps),
             bcolors.ENDC,
             bcolors.BLUE,
-            format_speed(up_speed),
+            format_speed(up_speed, ps),
             bcolors.ENDC,
         )
     )
@@ -89,9 +90,15 @@ def main():
         print("\rAverage speed")
         down_bytes, up_bytes = get_current_bytes()
         now = time.time()
-        down_speed = (start_down_bytes - down_bytes) / (start_time - now)
-        up_speed = (start_up_bytes - up_bytes) / (start_time - now)
+        down_speed = (down_bytes - start_down_bytes) / (now - start_time)
+        up_speed = (up_bytes - start_up_bytes) / (now - start_time)
         print_speed(down_speed, up_speed, True)
+
+        print("\nTotal data")
+        down_bytes, up_bytes = get_current_bytes()
+        down_speed = down_bytes - start_down_bytes
+        up_speed = up_bytes - start_up_bytes
+        print_speed(down_speed, up_speed, True, False)
 
 
 if __name__ == "__main__":
