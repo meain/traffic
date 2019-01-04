@@ -21,7 +21,7 @@ counters = psutil.net_io_counters(pernic=True)
 if "en0" not in counters:
     network_interface = list(counters.keys())[0]
 
-print(f"Interface: {network_interface}")
+print("Interface:", network_interface)
 
 
 def get_current_bytes():
