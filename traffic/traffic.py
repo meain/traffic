@@ -15,10 +15,12 @@ class bcolors:
     UNDERLINE = "\033[4m"
 
 
+network_interface = "en0"
+
 counters = psutil.net_io_counters(pernic=True)
 if "en0" not in counters:
-    print("Could not find a network interface")
-    exit(1)
+    network_interface = list(counters.keys())[0]
+    print(f"Could not find en0, using {network_interface}")
 
 
 def get_current_bytes():
