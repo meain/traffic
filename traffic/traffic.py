@@ -24,7 +24,7 @@ if "en0" not in counters:
 
 
 def get_current_bytes():
-    data = psutil.net_io_counters(pernic=True)["en0"]
+    data = psutil.net_io_counters(pernic=True)[network_interface]
     down_bytes = data.bytes_recv
     up_bytes = data.bytes_sent
     return down_bytes, up_bytes
