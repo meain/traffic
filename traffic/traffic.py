@@ -21,8 +21,6 @@ counters = psutil.net_io_counters(pernic=True)
 if "en0" not in counters:
     network_interface = list(counters.keys())[0]
 
-print("Interface:", network_interface)
-
 
 def get_current_bytes():
     data = psutil.net_io_counters(pernic=True)[network_interface]
@@ -65,6 +63,10 @@ def print_speed(down_speed, up_speed, final=False, ps=True):
 
 
 def main():
+    global network_interface
+    if len(sys.argv) > 1:
+        network_interface = sys.argv[1]
+    print("Interface:", network_interface)
     start_time = time.time()
     start_down_bytes, start_up_bytes = get_current_bytes()
     last_down_bytes, last_up_bytes = start_down_bytes, start_up_bytes

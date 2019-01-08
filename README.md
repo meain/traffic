@@ -19,3 +19,9 @@ Just run:
 ```
 traffic
 ```
+
+If you wanna specify a specific interface provide it as the first argument
+
+```
+traffic en0
+```
