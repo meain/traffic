@@ -2,7 +2,7 @@
 
 Gives you the current traffic stats on your system.
 
-> Shows average speed at the exit.
+> Shows average speed and total data transferred at the exit.
 
 ![gif](https://i.imgur.com/gtrfbxC.gif)
 
