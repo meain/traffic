@@ -32,8 +32,8 @@ def get_current_bytes():
 
 
 def format_speed(speed, ps):
-    if speed == 0:
-        return "0 B"
+    if speed == 0:  # log(0) will error out
+        return "0 B" + ("/s" if ps else "")
     factor = int(math.floor(math.log(speed) / math.log(1024)))
     return (
         str(int(speed / 1024 ** factor))
