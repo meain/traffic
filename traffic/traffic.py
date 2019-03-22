@@ -18,8 +18,15 @@ class bcolors:
 network_interface = "en0"
 
 counters = psutil.net_io_counters(pernic=True)
-if "en0" not in counters:
-    network_interface = list(counters.keys())[0]
+bytes_received_for_counters = [(c, counters[c][1]) for c in counters.keys()]
+network_interface = list(counters.keys())[0]
+max = 0
+for nib in bytes_received_for_counters:
+    if nib[0] == 'lo':
+        continue
+    if nib[1] > max:
+        max = nib[1]
+        network_interface = nib[0]
 
 
 def get_current_bytes():
