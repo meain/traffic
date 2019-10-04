@@ -78,7 +78,7 @@ def print_help():
         """traffic - a tool to view your network speed
 Usage: traffic [options] [device]
 
-- see the network stats on your main device:
+- see the network stats on your main device
     $ traffic
 - specify a network device
     $ traffic en0

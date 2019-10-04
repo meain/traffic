@@ -14,14 +14,16 @@ pip3 install webtraffic
 
 ## Usage
 
-Just run:
-
 ```
-traffic
-```
+traffic - a tool to view your network speed
+Usage: traffic [options] [device]
 
-If you wanna specify a specific interface provide it as the first argument
-
-```
-traffic en0
+- see the network stats on your main device
+    $ traffic
+- specify a network device
+    $ traffic en0
+- list all network devices
+    $ traffic -l
+- view this help
+    $ traffic -h
 ```
