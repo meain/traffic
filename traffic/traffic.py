@@ -54,7 +54,7 @@ def print_speed(down_speed, up_speed, down_bytes_total, up_bytes_total, final=Fa
     CURSOR_UP_ONE = "\x1b[1A"
     ERASE_LINE = "\x1b[2K"
     sys.stdout.write(
-        "\rDown: %s%s .. %s/s%s\n\r  Up: %s%s .. %s/s%s\n"
+        "\r\nDown: %s%s .. %s/s%s\n\r  Up: %s%s .. %s/s%s"
         % (
             bcolors.GREEN,
             format_bytes(down_bytes_total),
@@ -67,10 +67,12 @@ def print_speed(down_speed, up_speed, down_bytes_total, up_bytes_total, final=Fa
         )
     )
     if not final:
-        sys.stdout.write(CURSOR_UP_ONE)
         sys.stdout.write(ERASE_LINE)
         sys.stdout.write(CURSOR_UP_ONE)
         sys.stdout.write(ERASE_LINE)
+        sys.stdout.write(CURSOR_UP_ONE)
+    else:
+        sys.stdout.write("\n")
 
 
 def print_help():
@@ -113,11 +115,17 @@ def main():
             if sys.argv[1] in [s[0] for s in bytes_received_for_counters]:
                 network_interface = sys.argv[1]
             else:
-                print(bcolors.RED + "Unknown network device `" + sys.argv[1] + "`" + bcolors.ENDC)
+                print(
+                    bcolors.RED
+                    + "Unknown network device `"
+                    + sys.argv[1]
+                    + "`"
+                    + bcolors.ENDC
+                )
                 print("Use `traffic -l` to view list of devices")
                 exit(1)
 
-    print("Interface:", network_interface)
+    sys.stdout.write("Interface: %s" % (network_interface))
     start_time = time.time()
     start_down_bytes, start_up_bytes = get_current_bytes()
     last_down_bytes, last_up_bytes = start_down_bytes, start_up_bytes
