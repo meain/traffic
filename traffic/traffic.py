@@ -22,7 +22,7 @@ bytes_received_for_counters = [(c, counters[c][1]) for c in counters.keys()]
 network_interface = list(counters.keys())[0]
 max = 0
 for nib in bytes_received_for_counters:
-    if nib[0] == 'lo':
+    if nib[0] == "lo":
         continue
     if nib[1] > max:
         max = nib[1]
@@ -39,7 +39,12 @@ def get_current_bytes():
 def format_speed(speed, ps):
     if speed == 0:  # log(0) will error out
         return "0 B" + ("/s" if ps else "")
-    factor = int(math.floor(math.log(speed) / math.log(1024)))
+    sl = 0
+    try:
+        sl = math.log(speed)
+    except Exception:
+        pass
+    factor = int(math.floor(sl / math.log(1024)))
     return (
         str(int(speed / 1024 ** factor))
         + " "
