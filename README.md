@@ -1,10 +1,10 @@
-# Traffic
-
-Gives you the current traffic stats on your system.
+<h1 align="center">Traffic</h1>
+<p align="center">Gives you the current traffic stats on your system.</p>
+<p align="center">
+<img src="https://i.imgur.com/b5XbLOK.png">
+</p>
 
 > Shows average speed and total data transferred at the exit.
-
-![gif](https://i.imgur.com/uhEhSER.gif)
 
 ## Installation
 
