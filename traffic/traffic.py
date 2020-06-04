@@ -53,6 +53,9 @@ def format_bytes(speed):
 def print_speed(down_speed, up_speed, down_bytes_total, up_bytes_total, final=False):
     CURSOR_UP_ONE = "\x1b[1A"
     ERASE_LINE = "\x1b[2K"
+    HIDE_CURSOR = "\x1b[?25l"
+    SHOW_CURSOR = "\x1b[?25h"
+    sys.stdout.write(HIDE_CURSOR)
     sys.stdout.write(
         "\r\nDown: %s%s .. %s/s%s\n\r  Up: %s%s .. %s/s%s"
         % (
@@ -66,6 +69,7 @@ def print_speed(down_speed, up_speed, down_bytes_total, up_bytes_total, final=Fa
             bcolors.ENDC,
         )
     )
+
     if not final:
         sys.stdout.write(ERASE_LINE)
         sys.stdout.write(CURSOR_UP_ONE)
@@ -73,6 +77,7 @@ def print_speed(down_speed, up_speed, down_bytes_total, up_bytes_total, final=Fa
         sys.stdout.write(CURSOR_UP_ONE)
     else:
         sys.stdout.write("\n")
+        sys.stdout.write(SHOW_CURSOR)
 
 
 def print_help():
