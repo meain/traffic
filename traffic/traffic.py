@@ -43,7 +43,7 @@ def get_current_bytes():
     return down_bytes, up_bytes
 
 
-def format_bytes(speed):
+def format_bytes(speed, use_float=False):
     if speed == 0:  # log(0) will error out
         return "0B"
     sl = 0
@@ -52,9 +52,10 @@ def format_bytes(speed):
     except Exception:
         pass
     factor = int(math.floor(sl / math.log(1024)))
-    return (
-        str(int(speed / 1024 ** factor)) + ["B", "KB", "MB", "GB", "TB", "PB"][factor]
-    )
+    if use_float and factor > 1:
+        return str(round(speed / 1024 ** factor, 2)) + ["B", "KB", "MB", "GB", "TB", "PB"][factor]
+    else:
+        return str(int(speed / 1024 ** factor)) + ["B", "KB", "MB", "GB", "TB", "PB"][factor]
 
 
 def print_speed(down_speed, up_speed, down_bytes_total, up_bytes_total, final=False):
@@ -69,11 +70,11 @@ def print_speed(down_speed, up_speed, down_bytes_total, up_bytes_total, final=Fa
         "\r\nDown: %s%s .. %s/s%s\n\r  Up: %s%s .. %s/s%s"
         % (
             bcolors.GREEN,
-            format_bytes(down_bytes_total),
+            format_bytes(down_bytes_total, True),
             ("avg:" if final else "") + format_bytes(down_speed),
             bcolors.ENDC,
             bcolors.BLUE,
-            format_bytes(up_bytes_total),
+            format_bytes(up_bytes_total, True),
             ("avg:" if final else "") + format_bytes(up_speed),
             bcolors.ENDC,
         )
