@@ -27,8 +27,8 @@ def format_bytes(speed):
     sl = math.log(speed)
     factor = int(math.floor(sl / math.log(1024)))
     speed_unit = ["B", "KB", "MB", "GB", "TB", "PB"][factor]
-    if factor > 2:
-        return str(round(speed / 1024 ** factor, 2)) + speed_unit
+    if factor > 1:
+        return str(round(speed / 1024 ** factor, 1)) + speed_unit
     else:
         return str(int(speed / 1024 ** factor)) + speed_unit
 
