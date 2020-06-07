@@ -16,6 +16,7 @@ class bcolors:
 
 
 network_interface = "en0"
+offline = False
 
 counters = psutil.net_io_counters(pernic=True)
 bytes_received_for_counters = [(c, counters[c][1]) for c in counters.keys()]
@@ -30,7 +31,13 @@ for nib in bytes_received_for_counters:
 
 
 def get_current_bytes():
-    data = psutil.net_io_counters(pernic=True)[network_interface]
+    global offline
+    try:
+        data = psutil.net_io_counters(pernic=True)[network_interface]
+        offline = False
+    except KeyError:
+        offline = True
+
     down_bytes = data.bytes_recv
     up_bytes = data.bytes_sent
     return down_bytes, up_bytes
@@ -56,6 +63,8 @@ def print_speed(down_speed, up_speed, down_bytes_total, up_bytes_total, final=Fa
     HIDE_CURSOR = "\x1b[?25l"
     SHOW_CURSOR = "\x1b[?25h"
     sys.stdout.write(HIDE_CURSOR)
+    sys.stdout.write(ERASE_LINE)
+    sys.stdout.write("\rInterface: %s %s" % (network_interface, "[offline]" if offline else ""))
     sys.stdout.write(
         "\r\nDown: %s%s .. %s/s%s\n\r  Up: %s%s .. %s/s%s"
         % (
