@@ -22,9 +22,10 @@ def get_current_bytes(network_interface):
 
 
 def format_bytes(speed):
-    if speed == 0:  # log(0) will error out
+    try:
+        sl = math.log(speed)
+    except ValueError:
         return "0B"
-    sl = math.log(speed)
     factor = int(math.floor(sl / math.log(1024)))
     speed_unit = ["B", "KB", "MB", "GB", "TB", "PB"][factor]
     if factor > 1:
